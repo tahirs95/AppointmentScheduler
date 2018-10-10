@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+    {% load crispy_forms_tags %}
+    {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
+<form method="POST" id="patientForm" data-times-url="{% url 'ajax_load_time_slots' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button id="customPayment" type = 'submit'> PAY </button>
+</form>
+<!-- <form action="{% url 'charge' %}" method="post">
+  {% csrf_token %}
+<script src="https://checkout.stripe.com/checkout.js" ></script>
+<script>
+    var handler = StripeCheckout.configure({
+      key: 'pk_test_Y9HCOSmjdfKF5b9F3XXudENM',
+      image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+      locale: 'auto',
+      token: function(token) {
+        form = document.getElementById('patientForm');
+        form.submit();
+      }
+    });
+    document.getElementById('customPayment').addEventListener('click', function(e) {
+      // Open Checkout with further options:
+      handler.open({
+        name: 'Stripe.com',
+        description: '2 widgets',
+        zipCode: true,
+        amount: 5000
+      });
+      e.preventDefault();
+    });
+    window.addEventListener('popstate', function(e) {
+      handler.close();
+    });
+    </script>
+    </form> -->
+  <br>
+  <form action="{% url 'charge' %}" method="post">
+      {% csrf_token %}
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_Y9HCOSmjdfKF5b9F3XXudENM"
+              data-description="A Django Charge"
+              data-amount="500"
+              data-locale="auto"></script>
+  </form>
+  <script>
+    $("#id_event_date").change(function () {
+      var url = $("#patientForm").attr("data-times-url");  // get the url of the `load_cities` view
+      var eventId = $(this).val();  // get the selected country ID from the HTML input
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'event_date': eventId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_start").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+    });
+  </script>
+</body>
+{% endblock %}
+</html>

@@ -1,0 +1,4 @@
+<option value="">{% if time_slots %}Available Slots{% else %}No Slot Available{% endif %}</option>
+{% for time_set in time_slots %}
+<option value="{{ time_set.pk }}">{{ time_set.start }} - {{ time_set.end }}</option>
+{% endfor %}

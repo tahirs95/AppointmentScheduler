@@ -1,0 +1,11 @@
+<center> <h1> User Dashboard</h1> </center>  
+<ul>
+{% for obj in q_list %}
+ 
+<h3>Name: {{obj.patient_name}}</h3>
+Date: {{obj.event}}
+<br>
+Slot: {{obj.start}}
+
+{% endfor %}
+</ul>
