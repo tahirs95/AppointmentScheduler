@@ -24,7 +24,10 @@ class EventCalendar(HTMLCalendar):
         events_from_day = events.filter(event_date__day=day)
         events_html = "<ul>"
         for event in events_from_day:
-            events_html += event.get_absolute_url() + "<br>"
+            if event.available == 0:
+                events_html += event.get_absolute_url() + " (Purchased)<br>"
+            else:
+                events_html += event.get_absolute_url() + "<br>"
         events_html += "</ul><select class='id_check'><option value=''>Add New</option><br>"
         if day != 0:
             time_slot = TimeSlots.objects.filter(~Q(event__event_date=actual_date))

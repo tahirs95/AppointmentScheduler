@@ -1,6 +1,5 @@
 from django import forms
-from .models import Event, TimeSlots, Patient
-from django.db.models import Count
+from .models import TimeSlots, Patient
 
 
 class DateInput(forms.DateInput):

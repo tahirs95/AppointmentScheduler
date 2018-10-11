@@ -1,15 +1,24 @@
 from .models import TimeSlots, Event, Patient
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect
 from django.shortcuts import render
 from django.conf import settings
 import stripe
 from .forms import PatientForm
 from django.views.generic import CreateView
+from .send_mail import email_user
+from django.core.mail import send_mail
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def charge(request):  # new
+    change = Patient.objects.create(
+        event_date=request.POST.get('event_date'),
+        patient_name=request.POST.get('patient_name'),
+        phone_number=request.POST.get('phone_number'),
+        email=request.POST.get('email'),
+        start=TimeSlots.objects.filter(id=request.POST.get('start'))[0])
+    change.save()
     if request.method == 'POST':
         charge = stripe.Charge.create(
             amount=5000,
@@ -17,12 +26,14 @@ def charge(request):  # new
             description='Book your appointment',
             source=request.POST['stripeToken']
         )
-        return render(request, 'charge.html')
+    change.paid = True
+    change.save()
+    email_user(change.email, change.patient_name, change.event_date, change.start)
+    return render(request, 'charge.html')
 
 
 class PatientCreate(CreateView):
     form_class = PatientForm
-    success_url = '/admin/'
     template_name = 'index.html'
 
     def get_context_data(self, **kwargs):  # new
@@ -48,3 +59,4 @@ def patient_view(request):
     q = Patient.objects.all()
     context = { 'q_list': q}
     return render(request, template_name, context)
+

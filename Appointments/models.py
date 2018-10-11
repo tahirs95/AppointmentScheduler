@@ -39,6 +39,8 @@ class Patient(models.Model):
     email = models.EmailField()
     event = models.OneToOneField(Event, on_delete=models.CASCADE, null=True, blank=True)
     start = models.ForeignKey(TimeSlots, on_delete=models.CASCADE, null=True, verbose_name='Slot time')
+    paid = models.BooleanField(default=False)
+    skype_key = models.CharField(max_length=60, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         self.event = Event.objects.get(event_date=self.event_date, start=self.start)
