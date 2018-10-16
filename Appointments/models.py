@@ -42,9 +42,14 @@ class Patient(models.Model):
     paid = models.BooleanField(default=False)
     skype_key = models.CharField(max_length=60, null=True, blank=True)
 
+    def get_absolute_url(self):
+        return reverse('appointment-detail', args=[str(self.patient_ID)])
+
     def save(self, *args, **kwargs):
         self.event = Event.objects.get(event_date=self.event_date, start=self.start)
         change = Event.objects.get(pk=self.event.pk)
         change.available = False
         change.save()
         super(Patient, self).save(*args, **kwargs)
+
+

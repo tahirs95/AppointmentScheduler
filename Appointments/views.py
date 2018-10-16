@@ -6,7 +6,7 @@ import stripe
 from .forms import PatientForm
 from django.views.generic import CreateView
 from .send_mail import email_user
-from django.core.mail import send_mail
+import datetime
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -56,7 +56,14 @@ def create_event(request, start_time, day_date):
 
 def patient_view(request):
     template_name = 'patient_dashboard.html'
-    q = Patient.objects.all()
-    context = { 'q_list': q}
+    q = Patient.objects.filter(paid=True)
+    context = {'q_list': q}
     return render(request, template_name, context)
 
+
+def appointment_detail(request, pk):
+    detail = Patient.objects.get(pk=pk)
+    context = {
+        'detail': detail,
+    }
+    return render(request, 'appointment_detail.html', context)

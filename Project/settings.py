@@ -122,8 +122,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'm.tahircis95@gmail.com'
-EMAIL_HOST_PASSWORD = 'safamaha444'
+EMAIL_HOST_USER = 'doc.landivar@gmail.com'
+EMAIL_HOST_PASSWORD = 'finebol3'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -131,5 +131,5 @@ EMAIL_HOST_PASSWORD = 'safamaha444'
 
 STATIC_URL = '/static/'
 
-STRIPE_PUBLISHABLE_KEY = "pk_test_Y9HCOSmjdfKF5b9F3XXudENM"
-STRIPE_SECRET_KEY = "sk_test_lOjoEiMgKNoA99j0u2j16bYZ"
+STRIPE_PUBLISHABLE_KEY = "pk_test_K0yfRr7i8Jo46sKWjJzmrYll"
+STRIPE_SECRET_KEY = "sk_test_Tcow428DqEi5zIBRf1qbVhNP"
