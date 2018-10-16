@@ -1,5 +1,5 @@
 # AppointmentScheduler
-A Django based web app to schedule appointments for the doctor.
+A Django based web app to schedule appointments for the doctor. The web app uses stripe as payment method and Skype interviews are held between doctor and patient.
 <br>
 <h1>Patient View:</h1>
 
