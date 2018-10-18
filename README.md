@@ -11,9 +11,9 @@ A Django based web app to schedule appointments for the doctor. The web app uses
 
 <h1>Stripe Payment View:</h1>
 
-![123](123.PNG)
+![123](123.jpg)
 
 <h1>Skype View:</h1>
 
-![456](456.PNG)
+![456](456.jpg)
 
